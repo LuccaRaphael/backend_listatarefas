@@ -4,14 +4,14 @@ const sqlite3 = require('sqlite3').verbose();
 const app = express();
 const PORT = 3000;
 
-const db = new sqlite3.Database(':memory:'); // Usando um banco de dados em memória para este exemplo
+app.use(express.json());
+const db = new sqlite3.Database('banco-de-dados.db'); // Usando um banco de dados em memória para este exemplo
 
 // Criar a tabela 'tarefas' no banco de dados
 db.serialize(() => {
     db.run("CREATE TABLE IF NOT EXISTS tarefas (id INTEGER PRIMARY KEY, tarefa TEXT)");
 });
 
-app.use(express.json());
 
 // Rota para adicionar uma nova tarefa
 app.post('/tarefas', (req, res) => {
